@@ -7,8 +7,8 @@ class Category extends Product {
     protected $toy;
     protected $home;
 
-    public function __construct($_title, $_price, $_name, $_food, $_toy, $_home) {
-        parent::__construct($_title, $_price);
+    public function __construct($_image, $_title, $_price, $_name, $_food, $_toy, $_home) {
+        parent::__construct($_image, $_title, $_price);
         $this->setName($_name);
         $this->setFood($_food);
         $this->setToy($_toy);
@@ -16,7 +16,11 @@ class Category extends Product {
     }
 
     public function getName() {
-        return $this->name;
+        if ($this->name === "dog") {
+            return "fa-solid fa-dog";
+        } else {
+            return "fa-solid fa-cat";
+        }
     }
 
     public function setName($_name) {
