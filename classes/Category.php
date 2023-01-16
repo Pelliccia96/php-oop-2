@@ -18,7 +18,7 @@ class Category extends Product {
     public function getName() {
         if ($this->name === "dog") {
             return "fa-solid fa-dog";
-        } else {
+        } else if ($this->name === "cat") {
             return "fa-solid fa-cat";
         }
     }
