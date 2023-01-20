@@ -1,17 +1,37 @@
 <?php
-include_once "./classes/Category.php";
-include_once "./classes/Product.php";
+require_once "./models/Product.php";
+require_once "./models/Category.php";
+require_once "./models/Food.php";
+require_once "./models/Toy.php";
 
-$productsList = [
-    $newCategory_1 = new Category("https://picsum.photos/id/237/350/400", "Pippo", "14.90", "dog", "Carne in scatola", "Palla", "Casa"),
-    $newCategory_2 = new Category("https://picsum.photos/id/593/350/400", "Yuki", "9.90", "cat", "Crocchette", "Peluche", "Cartone"),
-    $newCategory_3 = new Category("https://picsum.photos/id/582/350/400", "Jeppy", "6.50", "cat", "Crocchette", "Gomitolo", "Cesto"),
-    $newCategory_4 = new Category("https://picsum.photos/id/200/350/400", "Sam", "19.90", "dog", "Carne in scatola", "Osso", "Casa"),
-    $newCategory_5 = new Category("https://picsum.photos/id/433/350/400", "Bobby", "17.40", "dog", "Carne in scatola", "Pupazzo", "Cesto"),
-    $newCategory_6 = new Category("https://picsum.photos/id/219/350/400", "Stella", "15.50", "cat", "Crocchette", "Filo", "Cartone"),
-];
+try {
+    $catCategory = new Category("Gatti", "fa-cat");
+    $dogCategory = new Category("Cani", "fa-dog");
+    $officeCategory = new Category("Cancelleria", "fa-briefcase");
 
+    $penna = new Product("Penna a sfera", 1.3, "https://picsum.photos/id/237/350/400", $officeCategory);
+    $rismaCarta = new Product("Risma carta A4", 4.15, "https://picsum.photos/id/593/350/400", $officeCategory);
+    $ciboScatola = new Food("Cibo in scatola", .50, "https://picsum.photos/id/582/350/400", $dogCategory, 300);
+    $croccantini = new Food("Croccantini al pollo", 3.20, "https://picsum.photos/id/200/350/400", $catCategory, 380);
+    $palla = new Game("Palla da tennis", .99, "https://picsum.photos/id/433/350/400", $dogCategory, ["feltro", "plastica"]);
+    $tiragraffi = new Game("Tiragraffi", 21.80, "https://picsum.photos/id/219/350/400", $catCategory, ["legno", "pvc"]);
+
+    $productsList = [
+        $penna,
+        $rismaCarta,
+        $ciboScatola,
+        $croccantini,
+        $palla,
+        $tiragraffi,
+        $palla,
+        $ciboScatola,
+    ];
 /* var_dump($productsList); */
+
+} catch(Exception $e) {
+    echo "Errore! C'è stato un problema con la creazione del prodotto.";
+    echo $e ->getMessage();
+}
 
 ?>
 
@@ -21,58 +41,25 @@ $productsList = [
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="imgs/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="imgs/favicon.ico" type="image/x-icon">
     <title>php-oop-2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body class="bg-dark">
     <div class="container text-white my-5">
-        <div class="mt-3 mb-5">
-            <h1 class="pt-3 text-center">PHP-OOP-2</h1>
+        <div class="text-center pb-5">
+            <h1 class="mb-5">PHP-OOP-2-V2</h1>
         </div>
-        <div class="row">
-            <?php foreach ($productsList as $product) { ?>
-                <div class="col-4 g-4">
-                    <div class="card">
-                        <img src="<?php echo $product->getImage() ?>" class="card-img-top" alt="">
-                        <div class="card-body text-black">
-                            <h5 class="card-title"><?php echo $product->getTitle() ?></h5>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt vitae, distinctio dolorum accusamus nobis eligendi beatae.</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div>
-                                    <h6>Prezzo</h6>
-                                    <p><?php echo $product->getPrice() ?> €</p>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>
-                                    <h6><i class="<?php echo $product->getName() ?>"></i></h6>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>
-                                    <h6>Cibo</h6>
-                                    <p><?php echo $product->getFood() ?></p>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>
-                                    <h6>Gioco</h6>
-                                    <p><?php echo $product->getToy() ?></p>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div>
-                                    <h6>Cuccia</h6>
-                                    <p><?php echo $product->getHome() ?></p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+        <div class="row text-black">
+            <?php foreach ($productsList as $product) : ?>
+                <div class="col-3 g-5">
+                    <?php $product->printCardHTML($product) ?>
                 </div>
-            <?php } ?>
+            <?php endforeach ?>
         </div>
     </div>
+    <script src="js/main.js"></script>
 </body>
+</html>
